@@ -8,7 +8,24 @@ This repository contains only the model inference layer.
 No UI or frontend logic is included.
 
 ---
+## Local Test Passed
+![local_test](local_test_passed.png)
 
+---
+## Deployment Successful
+![local_test](deployment_completed.png)
+
+---
+
+## Live url
+![local_test](live_url.png)
+
+---
+
+## Live Test Passed
+![local_test](live_test_2.png)
+
+---
 ## Use Case
 
 This service predicts health insurance premiums based on:
@@ -88,9 +105,18 @@ Response:
 ````
 import requests
 
-response = requests.post(
-    "http://127.0.0.1:8000/predict",
-    json={
+BASE_URL = "https://health-insurance-premium-model-api-bvgrg3bmcyhbbpb4.centralindia-01.azurewebsites.net"
+
+def test_root_endpoint():
+    response = requests.get(f"{BASE_URL}/")
+    assert response.status_code == 200
+    data = response.json()
+    assert "status" in data
+    print("Root endpoint OK:", data)
+
+
+def test_predict_endpoint():
+    payload = {
         "age": 35,
         "dependants": 2,
         "income": 15,
@@ -104,12 +130,38 @@ response = requests.post(
         "region": "Southwest",
         "medical_history": "Diabetes"
     }
-)
 
-print(response.json())
+    response = requests.post(f"{BASE_URL}/predict", json=payload)
 
----
+    assert response.status_code == 200
+    data = response.json()
 
+    assert "predicted_premium" in data
+    assert isinstance(data["predicted_premium"], (int, float))
+    assert data["predicted_premium"] > 0
+
+    print("Prediction successful. Premium:", data["predicted_premium"])
+
+
+````
+## Output  
+````
+============================= test session starts =============================
+collecting ... collected 2 items
+
+tests/test_api_live.py::test_root_endpoint 
+tests/test_api_live.py::test_predict_endpoint 
+
+============================== 2 passed in 2.86s ==============================
+PASSED                        [ 50%]Root endpoint OK: {'status': 'API running'}
+PASSED                     [100%]Prediction successful. Premium: 24887
+
+Process finished with exit code 0
+````
+## Note:
+Can be used in any app web / mobile-(html / django/ streamlit /...other, Mobile or other platforms)
 ## License
 
 MIT License
+
+Author : - Karan KK (AI-Solution)

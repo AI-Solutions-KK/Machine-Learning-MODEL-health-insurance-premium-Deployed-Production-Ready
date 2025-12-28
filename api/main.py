@@ -7,7 +7,7 @@ app = FastAPI(title="Health Insurance Premium API")
 
 @app.get("/")
 def root():
-    return {"status": "API running"}
+    return {"status": "API running check Swagger to test"}
 
 
 @app.post("/predict")

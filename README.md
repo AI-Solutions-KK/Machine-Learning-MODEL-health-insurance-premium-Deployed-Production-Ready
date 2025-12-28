@@ -1,4 +1,4 @@
-# Health Insurance Premium Model API
+# Health Insurance Premium ML - Model 
 
 A production-grade machine learning inference service for predicting health insurance premiums.
 The model is exposed as a REST API using FastAPI and is designed to be consumed by any client
@@ -45,6 +45,8 @@ https://health-insurance-premium-ui-gvhvh4esfqe9emb5.centralindia-01.azurewebsit
 ![local_test](live_test_2.png)
 
 ## 🔐 API Management (APIM)
+
+![APIM](APIM.png)
 
 This project uses **API Management (APIM)** as a secure gateway in front of the machine learning model.
 
